@@ -146,7 +146,8 @@
           "style" : "simple",
           "explode" : false,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "example" : "flex1abcd2efg34hij"
           }
         } ],
         "responses" : {
@@ -231,7 +232,7 @@
           "explode" : false,
           "schema" : {
             "type" : "string",
-            "example" : "5abcd3efg56hij"
+            "example" : "flex1abcd2efg34hij"
           }
         } ],
         "requestBody" : {

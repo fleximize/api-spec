@@ -111,6 +111,7 @@ paths:
         explode: false
         schema:
           type: string
+          example: flex1abcd2efg34hij
       responses:
         "200":
           description: Successful response from the server
@@ -173,7 +174,7 @@ paths:
         explode: false
         schema:
           type: string
-          example: 5abcd3efg56hij
+          example: flex1abcd2efg34hij
       requestBody:
         description: |
           New loan application documents can be uploaded through this endpoint
