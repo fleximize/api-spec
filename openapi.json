@@ -230,7 +230,8 @@
           "style" : "simple",
           "explode" : false,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "example" : "5abcd3efg56hij"
           }
         } ],
         "requestBody" : {

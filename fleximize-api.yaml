@@ -173,6 +173,7 @@ paths:
         explode: false
         schema:
           type: string
+          example: 5abcd3efg56hij
       requestBody:
         description: |
           New loan application documents can be uploaded through this endpoint
