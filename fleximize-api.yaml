@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
   title: Fleximize Applications API
-  description: "Welcome to the Fleximize API!  \n\nPlease be aware this version of\
-    \ the API is currently in beta.  \nIf you encouter any problems or have any questions\
-    \ and inquiries, please contact the development team. Thank you.\n"
+  description: "Welcome to the Fleximize API!  \n\nIf you encouter any problems or\
+    \ have any questions and inquiries, please contact the development team. Thank\
+    \ you.\n"
   contact:
     email: development@fleximize.com
   version: 2.0.0
