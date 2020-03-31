@@ -18,8 +18,10 @@ paths:
       tags:
       - authorisation
       summary: Gets authentication token
-      description: Gets authentication token using credentials. Token is valid for
-        7 days. After that new token should be optained using the same endpoint
+      description: |
+        Gets authentication token using credentials.
+
+          Token is valid for **7 days**. After that new token should be optained using the same endpoint
       operationId: getToken
       requestBody:
         description: "Fleximize uses API token to allow access to the API called JWT.\
