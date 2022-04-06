@@ -1,17 +1,17 @@
 openapi: 3.0.3
 info:
   title: Fleximize Applications API
-  description: "Welcome to the Fleximize API!  \n\nIf you encouter any problems or\
-    \ have any questions and inquiries, please contact the development team. Thank\
-    \ you.\n\n**Important Notice:**\n\nBy submitting application, you confirm that\
-    \ you have obtained the consent of all individuals associated with it (directors,\
-    \ personal guarantors, mortgagors and shareholders etc). The personal information\
-    \ we have collected from you will be shared with fraud prevention agencies. This\
-    \ is to prevent fraud and money laundering and to verify the identity of all individuals\
-    \ supplied and associated with this application. If fraud is detected, you and\
-    \ these individuals could be refused certain services, finance and employment.\
-    \ Further details on the processing of information and the individual’s data processing\
-    \ rights can be found [here](https://www.cifas.org.uk/fpn). \n"
+  description: "Welcome to the Fleximize API!\n\n**Important Notice:**\n\nBy submitting\
+    \ application, you confirm that you have obtained the consent of all individuals\
+    \ associated with it (directors, personal guarantors, mortgagors and shareholders\
+    \ etc). The personal information we have collected from you will be shared with\
+    \ fraud prevention agencies. This is to prevent fraud and money laundering and\
+    \ to verify the identity of all individuals supplied and associated with this\
+    \ application. If fraud is detected, you and these individuals could be refused\
+    \ certain services, finance and employment. Further details on the processing\
+    \ of information and the individual’s data processing rights can be found [here](https://www.cifas.org.uk/fpn).\
+    \  \n\nIf you encouter any problems or have any questions and inquiries, please\
+    \ contact the development team. Thank you. \n"
   contact:
     email: development@fleximize.com
   version: 2.0.0
@@ -29,7 +29,7 @@ paths:
       description: |
         Gets authentication token using credentials.
 
-          Token is valid for **7 days**. After that new token should be optained using the same endpoint
+          Token is valid for **7 days**. After that new token should be obtained using the same endpoint
       operationId: getToken
       requestBody:
         description: "Fleximize uses API token to allow access to the API called JWT.\
@@ -140,6 +140,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200_2'
+  /application/{application_id}/link-accountscore:
+    post:
+      tags:
+      - application
+      summary: Link customer open banking data.
+      description: |
+        Provide AccountScore customer reference token.
+
+        This can be found on AccountScore portal or through their API and it should provided as UIID (not internal reference)
+      operationId: linkAccountScore
+      parameters:
+      - name: application_id
+        in: path
+        description: application_id value returned in in the `/application` response
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: flex1abcd2efg34hij
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/application_id_linkaccountscore_body'
+      responses:
+        "200":
+          description: Successful response from the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "400":
+          description: "If aplication is not found or user is not set with us to provide\
+            \ AccountScore data, error response is returned.\n\nIf you want to be\
+            \ set up to share AccountScore with Fleximize then please contact us.\n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
   /application/document-types:
     get:
       tags:
@@ -157,7 +197,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/inline_response_200_3'
+                  $ref: '#/components/schemas/inline_response_200_4'
           links:
             document_type:
               operationId: postApplicationDocuments
@@ -202,7 +242,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/body'
+              $ref: '#/components/schemas/application_id_upload_body'
         required: true
       responses:
         "200":
@@ -336,7 +376,7 @@ components:
           format: double
           example: 30000
         term:
-          maximum: 48
+          maximum: 60
           minimum: 3
           type: integer
           description: Loan term
@@ -671,7 +711,34 @@ components:
         internal_id:
           type: string
           description: Client internall ID
+    application_id_linkaccountscore_body:
+      required:
+      - token
+      type: object
+      properties:
+        token:
+          maximum: 36
+          minimum: 36
+          type: string
+          description: AccountScore Customer Reference
+          example: 12345678-1111-2222-94e6-c0eaf2e052ef
     inline_response_200_3:
+      type: object
+      properties:
+        result:
+          type: boolean
+          description: Returns 'true' if application have been linked correctly and
+            'false' on failure.
+          example: true
+    inline_response_400_1:
+      type: object
+      properties:
+        result:
+          type: boolean
+          description: Returns 'true' if application have been linked correctly and
+            'false' on failure.
+          example: false
+    inline_response_200_4:
       type: object
       properties:
         id:
@@ -682,7 +749,7 @@ components:
           type: string
           description: Document type description
           example: Bank Statement
-    body:
+    application_id_upload_body:
       required:
       - document_type
       - file
